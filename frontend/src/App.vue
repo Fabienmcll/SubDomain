@@ -1,5 +1,5 @@
 <template>
-<h1 class="font-bold">SubDomain</h1>
+  <router-view />
 </template>
 
 <script setup>

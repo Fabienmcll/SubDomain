@@ -1,5 +1,5 @@
 <template>
-<h1>SubDomain</h1>
+<h1 class="font-bold">SubDomain</h1>
 </template>
 
 <script setup>

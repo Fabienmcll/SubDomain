@@ -1,7 +1,12 @@
+// vite.config.js
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), tailwindcss()],
+  server: {
+    host: true,
+    port: 8080 // ici, tu forces le port que Docker expose
+  }
 })

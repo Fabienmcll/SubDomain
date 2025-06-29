@@ -68,6 +68,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import router from "../router/index.js";
 
 const user = ref({
   firstName: '',
@@ -91,6 +92,7 @@ const submitForm = async () => {
 
     if (response.ok) {
       successMessage.value = 'Inscription réussie !';
+      router.push('/')
     } else {
       errorMessage.value = 'Erreur lors de l\'inscription !';
     }

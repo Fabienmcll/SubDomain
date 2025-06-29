@@ -52,6 +52,12 @@
             class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 mx-auto sm:w-auto">
           Inscription
         </button>
+        <div v-if="successMessage" class="mb-4 mt-4 p-2 bg-green-100 text-green-800 rounded">
+          {{ successMessage }}
+        </div>
+        <div v-if="errorMessage" class="mb-4 mt-4 p-2 bg-red-100 text-red-800 rounded">
+          {{ errorMessage }}
+        </div>
         <div class="flex justify-center mt-4 text-sm">
           <p>Vous avez déjà un compte?</p>
           <p class="underline cursor-pointer ml-1">Connexion</p>
@@ -64,26 +70,37 @@
 </template>
 
 <script setup>
-const user = {
+import { ref } from 'vue';
+
+const user = ref({
   firstName: '',
   lastName: '',
   email: '',
   password: ''
-}
+})
+
+let successMessage = ref('')
+let errorMessage = ref('')
 
 const submitForm = async () => {
+  successMessage.value = '';
+  errorMessage.value = '';
   try {
     const response = await fetch('http://localhost:3000/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user.value)
     });
-    const reponse = await response.json();
-    console.log(reponse)
+
+    if (response.ok) {
+      successMessage.value = 'Inscription réussie !';
+    } else {
+      errorMessage.value = 'Erreur lors de l\'inscription !';
+    }
   } catch (error) {
     console.error(error);
+    errorMessage.value = 'Impossible de contacter le serveur.';
   }
-}
+};
+
 </script>

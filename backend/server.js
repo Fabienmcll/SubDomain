@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: 'http://localhost:8080' }));
 app.use(express.json());
 app.use('/register', registerRouter);
+app.use('/login', registerRouter);
 
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);

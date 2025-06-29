@@ -43,9 +43,6 @@
             required
             value="">
       </div>
-      <div>
-        <p class="text-red-500 pb-5"></p>
-      </div>
       <div class="flex-col flex mb-4">
         <button @click="submitForm"
             type="button"
@@ -60,7 +57,7 @@
         </div>
         <div class="flex justify-center mt-4 text-sm">
           <p>Vous avez déjà un compte?</p>
-          <p class="underline cursor-pointer ml-1">Connexion</p>
+          <a href="/" class="underline cursor-pointer ml-1">Connexion</a>
         </div>
       </div>
     </form>

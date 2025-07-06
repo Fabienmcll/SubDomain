@@ -47,6 +47,7 @@
       </form>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -82,4 +83,3 @@ const handleLogin = async () => {
   }
 };
 </script>
-

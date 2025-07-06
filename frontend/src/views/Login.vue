@@ -27,7 +27,7 @@
         </div>
         <div class="flex-col flex mb-4">
           <button
-              @click.prevent="login"
+              @click.prevent="handleLogin"
               type="button"
               class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 mx-auto sm:w-auto"
           >
@@ -52,8 +52,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { useAuthStore } from '../store/auth.js'
 const router = useRouter();
+const auth = useAuthStore();
 
 const user = ref({
   email: '',
@@ -67,33 +68,18 @@ if (localStorage.getItem('token')) {
   router.push('/dashboard');
 }
 
+const handleLogin = async () => {
+  successMessage.value = '';
+  errorMessage.value = '';
 
-  const login = async () => {
-    successMessage.value = '';
-    errorMessage.value = '';
-    try {
-      const response = await fetch('http://localhost:3000/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user.value),
-        credentials: 'include'
-      });
+  const result = await auth.login(user.value.email, user.value.password);
 
-      const data = await response.json();
+  if (result.success) {
+    successMessage.value = 'Connexion réussie !';
+    router.push('/dashboard');
+  } else {
+    errorMessage.value = result.message;
+  }
+};
+</script>
 
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-
-      if (response.ok) {
-        successMessage.value = 'Connexion réussie !';
-        router.push('/dashboard')
-      } else {
-        errorMessage.value = data.message || 'Erreur lors de la connexion';
-      }
-    } catch (error) {
-      console.error(error);
-      errorMessage.value = 'Impossible de contacter le serveur.';
-    }
-  };
-  </script>

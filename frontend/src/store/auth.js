@@ -35,33 +35,6 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async fetchUser() {
-            if (!this.token) return;
-            
-            try {
-                const response = await fetch('http://localhost:3000/profile', {
-                    method: 'GET',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.token}`
-                    },
-                    credentials: 'include'
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    this.user = data.user;
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                } else {
-                    // Token invalide, déconnexion
-                    this.logout();
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération des données utilisateur:', error);
-                this.logout();
-            }
-        },
-
         logout() {
             this.user = null;
             this.token = null;
